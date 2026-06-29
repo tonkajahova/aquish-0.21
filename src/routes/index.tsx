@@ -510,31 +510,45 @@ export function QuickView({
     return false;
   };
 
+  // Flat list of every image across every colour, so a single colour with
+  // multiple images is browsable from one carousel without creating extra
+  // colour entries (which would duplicate bag lines).
+  const images = useMemo(() => {
+    const arr: { colorId: string; src: string; name: string }[] = [];
+    product.colors.forEach((c) => {
+      getColorImages(c).forEach((src) => {
+        arr.push({ colorId: c.id, src, name: c.name });
+      });
+    });
+    return arr;
+  }, [product.colors]);
+
+  const [activeIdx, setActiveIdx] = useState(0);
+
   // Reset state when product changes
   useEffect(() => {
-    setColorId(product.colors[0]?.id ?? "");
+    setActiveIdx(0);
     setSize("");
     setBagOverlay(false);
     setInfoOpen(false);
   }, [product.id]);
 
-  const images = useMemo(
-    () =>
-      product.colors
-        .map((c) => ({ id: c.id, src: c.image, name: c.name }))
-        .filter((i) => i.src),
-    [product.colors],
-  );
-  const activeIdx = Math.max(0, images.findIndex((i) => i.id === colorId));
-  const current = images[activeIdx];
+  const safeIdx = images.length === 0 ? 0 : Math.min(activeIdx, images.length - 1);
+  const current = images[safeIdx];
+  const colorId = current?.colorId ?? product.colors[0]?.id ?? "";
+
+  const setColorId = (id: string) => {
+    const i = images.findIndex((im) => im.colorId === id);
+    if (i >= 0) setActiveIdx(i);
+  };
 
   const prevImg = () => {
     if (images.length < 2) return;
-    setColorId(images[(activeIdx - 1 + images.length) % images.length].id);
+    setActiveIdx((safeIdx - 1 + images.length) % images.length);
   };
   const nextImg = () => {
     if (images.length < 2) return;
-    setColorId(images[(activeIdx + 1) % images.length].id);
+    setActiveIdx((safeIdx + 1) % images.length);
   };
 
   const descLines = product.description
