@@ -326,9 +326,12 @@ function Admin() {
                   onChange={() => toggleSel(p.id)}
                 />
                 <div style={{ width: 48, height: 48 }}>
-                  {p.colors[0]?.image ? (
-                    <img src={p.colors[0].image} className="w-full h-full object-contain" alt="" />
-                  ) : (
+                  {(() => {
+                    const thumb = getColorImages(p.colors[0])[0];
+                    return thumb ? (
+                      <img src={thumb} className="w-full h-full object-contain" alt="" />
+                    ) : null;
+                  })()}
                     <div className="w-full h-full" style={{ background: "#e5e3df" }} />
                   )}
                 </div>
