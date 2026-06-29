@@ -11,6 +11,7 @@ import {
   setDropAt,
   type Product,
   type ColorVariant,
+  getColorImages,
   loadFromCloud,
   migrateLocalToCloud,
 } from "@/lib/store";
