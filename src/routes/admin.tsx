@@ -393,13 +393,39 @@ function ProductEditor({
   );
 
 
-  const fileToDataUrl = (file: File): Promise<string> =>
+  const resizeImage = (file: File, maxDim = 1200, quality = 0.85): Promise<string> =>
     new Promise((res, rej) => {
-      const r = new FileReader();
-      r.onload = () => res(r.result as string);
-      r.onerror = rej;
-      r.readAsDataURL(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          let { width, height } = img;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return rej(new Error("Canvas not supported"));
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL("image/jpeg", quality);
+          res(dataUrl);
+        };
+        img.onerror = rej;
+        img.src = reader.result as string;
+      };
+      reader.onerror = rej;
+      reader.readAsDataURL(file);
     });
+
+  const fileToDataUrl = (file: File): Promise<string> => resizeImage(file);
 
   const addColor = () => {
     const c: ColorVariant = {
