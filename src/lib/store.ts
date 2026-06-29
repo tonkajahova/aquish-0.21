@@ -5,8 +5,21 @@ export type ColorVariant = {
   id: string;
   name: string;
   swatch: string;
-  image: string; // data URL
+  /** Legacy single image (kept for backward compatibility). Prefer `images`. */
+  image?: string;
+  /** Multiple images for this colour (data URLs). */
+  images?: string[];
 };
+
+/** Return all images for a colour, preferring `images[]` but falling back to legacy `image`. */
+export function getColorImages(
+  c?: Pick<ColorVariant, "image" | "images"> | null,
+): string[] {
+  if (!c) return [];
+  if (Array.isArray(c.images) && c.images.length) return c.images.filter(Boolean);
+  if (c.image) return [c.image];
+  return [];
+}
 
 export type Product = {
   id: string;
