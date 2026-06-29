@@ -1033,7 +1033,7 @@ function OrdersPanel() {
     ...o,
     items: (o.items ?? []).map((it) => {
       const p = products.find((pp) => pp.sku === it.sku);
-      const img = p?.colors?.find((c) => c.name === it.color)?.image ?? p?.colors?.[0]?.image ?? null;
+      const img = getColorImages(p?.colors?.find((c) => c.name === it.color))[0] ?? getColorImages(p?.colors?.[0])[0] ?? null;
       return { ...it, image: img } as any;
     }),
   });
