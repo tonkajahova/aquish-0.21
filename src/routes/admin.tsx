@@ -541,25 +541,62 @@ function ProductEditor({
                 />
                 <button onClick={() => removeColor(c.id)} className="aquish-hover">×</button>
               </div>
-              <label className="flex items-center gap-3">
-                {c.image ? (
-                  <img src={c.image} alt="" style={{ width: 60, height: 60, objectFit: "contain" }} />
-                ) : (
-                  <div style={{ width: 60, height: 60, background: "#e5e3df" }} />
-                )}
-                <span className="aquish-hover px-2 py-1" style={{ border: "1px solid #000" }}>
-                  UPLOAD IMAGE
-                </span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={async (e) => {
-                    const f = e.target.files?.[0];
-                    if (f) updateColor(c.id, { image: await fileToDataUrl(f) });
-                  }}
-                />
-              </label>
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-wrap gap-2">
+                  {getColorImages(c).map((src, i) => (
+                    <div
+                      key={i}
+                      className="relative"
+                      style={{ width: 60, height: 60, border: "1px solid #000" }}
+                    >
+                      <img
+                        src={src}
+                        alt=""
+                        style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeColorImage(c.id, i)}
+                        aria-label="Remove image"
+                        className="absolute -top-2 -right-2 aquish-hover"
+                        style={{
+                          width: 18,
+                          height: 18,
+                          background: "#000",
+                          color: "#fff",
+                          fontSize: 12,
+                          lineHeight: "16px",
+                          textAlign: "center",
+                          borderRadius: "50%",
+                        }}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                  {getColorImages(c).length === 0 && (
+                    <div style={{ width: 60, height: 60, background: "#e5e3df" }} />
+                  )}
+                </div>
+                <label className="inline-flex">
+                  <span
+                    className="aquish-hover px-2 py-1"
+                    style={{ border: "1px solid #000", cursor: "pointer" }}
+                  >
+                    + UPLOAD IMAGES
+                  </span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={async (e) => {
+                      await addColorImages(c.id, e.target.files);
+                      e.target.value = "";
+                    }}
+                  />
+                </label>
+              </div>
             </div>
           ))}
         </div>
