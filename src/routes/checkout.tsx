@@ -340,11 +340,14 @@ function CheckoutPage() {
                 style={{ borderBottom: "1px solid #000" }}
               >
                 <div style={{ width: 64, height: 64, flexShrink: 0 }}>
-                  {c?.image ? (
-                    <img src={c.image} alt="" className="w-full h-full object-contain" />
-                  ) : (
-                    <div className="w-full h-full" style={{ background: "#e5e3df" }} />
-                  )}
+                  {(() => {
+                    const thumb = getColorImages(c)[0];
+                    return thumb ? (
+                      <img src={thumb} alt="" className="w-full h-full object-contain" />
+                    ) : (
+                      <div className="w-full h-full" style={{ background: "#e5e3df" }} />
+                    );
+                  })()}
                 </div>
                 <div className="flex-1 flex flex-col gap-1">
                   <div>{p?.sku ?? "—"}</div>
