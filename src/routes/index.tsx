@@ -1013,10 +1013,10 @@ function BagDrawer({
                     const thumb = getColorImages(c)[0];
                     return thumb ? (
                       <img src={thumb} alt="" className="w-full h-full object-contain" />
-                    ) : null;
-                  })() ?? (
-                    <div className="w-full h-full" style={{ background: "#e5e3df" }} />
-                  )}
+                    ) : (
+                      <div className="w-full h-full" style={{ background: "#e5e3df" }} />
+                    );
+                  })()}
                 </div>
                 <div className="flex-1 flex flex-col gap-1">
                   <div>{p?.sku ?? "—"}</div>
