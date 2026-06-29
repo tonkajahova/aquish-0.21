@@ -330,10 +330,10 @@ function Admin() {
                     const thumb = getColorImages(p.colors[0])[0];
                     return thumb ? (
                       <img src={thumb} className="w-full h-full object-contain" alt="" />
-                    ) : null;
+                    ) : (
+                      <div className="w-full h-full" style={{ background: "#e5e3df" }} />
+                    );
                   })()}
-                    <div className="w-full h-full" style={{ background: "#e5e3df" }} />
-                  )}
                 </div>
                 <div className="flex-1">
                   <div>{p.sku || "—"}</div>
