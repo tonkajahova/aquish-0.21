@@ -6,6 +6,7 @@ import {
   removeFromBag,
   updateBagQty,
   loadFromCloud,
+  getColorImages,
   type Product,
 } from "@/lib/store";
 import { useCurrency, parsePrice } from "@/lib/currency";
