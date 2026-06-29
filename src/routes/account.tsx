@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { listMyOrders } from "@/lib/commerce.functions";
 import { downloadInvoicePdf, type InvoiceOrder } from "@/lib/invoice";
-import { useStore } from "@/lib/store";
+import { useStore, getColorImages } from "@/lib/store";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
