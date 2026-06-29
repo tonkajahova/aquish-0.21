@@ -490,7 +490,7 @@ export function QuickView({
 }) {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [colorId, setColorId] = useState(product.colors[0]?.id ?? "");
+  
   const [size, setSize] = useState("");
   const [bagOverlay, setBagOverlay] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
