@@ -290,18 +290,6 @@ function CheckoutPage() {
             <div className="opacity-60">
               CARD DETAILS ARE ENTERED IN A SECURE PAYFAST WINDOW ON THIS PAGE.
             </div>
-            <div className="flex flex-col gap-1 pt-3 opacity-70">
-              <div className="flex items-center justify-between">
-                <span>LOCAL SHIPPING</span><span>3–5 BUSINESS DAYS</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>RETURNS</span><span>14 DAYS</span>
-              </div>
-              <div className="flex items-center gap-2 pt-1">
-                <span aria-hidden>🔒</span>
-                <span>SECURE PAYMENT — VISA · MASTERCARD · EFT · PAYFAST</span>
-              </div>
-            </div>
           </Section>
 
           <div className="flex flex-col items-center gap-2">
