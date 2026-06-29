@@ -132,7 +132,7 @@ function AccountPage() {
                     onClick={() => {
                       const items = (Array.isArray(o.items) ? o.items : []).map((it: any) => {
                         const p = products.find((pp: any) => pp.sku === it.sku);
-                        const img = p?.colors?.find((c: any) => c.name === it.color)?.image ?? p?.colors?.[0]?.image ?? null;
+                        const img = getColorImages(p?.colors?.find((c: any) => c.name === it.color))[0] ?? getColorImages(p?.colors?.[0])[0] ?? null;
                         return { ...it, image: img };
                       });
                       downloadInvoicePdf({ ...(o as any), items } as InvoiceOrder);
