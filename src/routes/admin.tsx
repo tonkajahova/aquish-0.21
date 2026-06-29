@@ -406,7 +406,7 @@ function ProductEditor({
       id: crypto.randomUUID(),
       name: "",
       swatch: "#000000",
-      image: "",
+      images: [],
     };
     setP({ ...p, colors: [...p.colors, c] });
   };
@@ -416,6 +416,21 @@ function ProductEditor({
 
   const removeColor = (id: string) =>
     setP({ ...p, colors: p.colors.filter((c) => c.id !== id) });
+
+  const addColorImages = async (id: string, files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    const dataUrls = await Promise.all(Array.from(files).map(fileToDataUrl));
+    const color = p.colors.find((c) => c.id === id);
+    const existing = getColorImages(color);
+    updateColor(id, { images: [...existing, ...dataUrls], image: undefined });
+  };
+
+  const removeColorImage = (id: string, idx: number) => {
+    const color = p.colors.find((c) => c.id === id);
+    const existing = getColorImages(color);
+    const next = existing.filter((_, i) => i !== idx);
+    updateColor(id, { images: next, image: undefined });
+  };
 
   return (
     <div className="fixed inset-0 z-50 aquish-bg aquish-fade-in overflow-auto">
