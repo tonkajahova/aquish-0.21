@@ -695,16 +695,16 @@ export function QuickView({
         <div className="flex justify-center gap-2 pb-[2.1rem]">
           {images.map((img, i) => (
             <button
-              key={img.id}
-              onClick={() => setColorId(img.id)}
-              aria-label={img.name || `IMAGE ${i + 1}`}
+              key={i}
+              onClick={() => setActiveIdx(i)}
+              aria-label={img.name ? `${img.name} ${i + 1}` : `IMAGE ${i + 1}`}
               style={{
                 width: 6,
                 height: 6,
                 borderRadius: "50%",
                 border: "none",
                 padding: 0,
-                background: i === activeIdx ? "#000" : "#bbb",
+                background: i === safeIdx ? "#000" : "#bbb",
                 cursor: "pointer",
               }}
             />
