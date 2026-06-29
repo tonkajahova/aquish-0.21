@@ -342,7 +342,7 @@ function ProductCard({
   content: ContentMap;
   onClick: () => void;
 }) {
-  const img = product.colors[0]?.image;
+  const img = getColorImages(product.colors[0])[0];
   const soldOut = product.stock <= 0;
   const lowStock = !soldOut && product.stock <= product.lowStockThreshold;
   const salePct = getProductSale(content, product.id);
